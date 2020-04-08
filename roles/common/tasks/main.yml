@@ -1,0 +1,7 @@
+# common tasks
+---
+ - name: set timezone to europe/kiev
+   timezone:
+    name: Europe/Kiev
+ - name: restart chrond (recommended in manual)
+   shell: /etc/init.d/cron restart

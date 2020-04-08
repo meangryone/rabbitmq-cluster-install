@@ -1,0 +1,18 @@
+# cluster configuration
+---
+   - name: rabbitmq creating user
+     rabbitmq_user:
+      user: "{{ rabbitmq_management_user }}"
+      password: "{{ rabbitmq_management_password }}"
+      vhost: /
+      tags: administrator
+      configure_priv: .*
+      read_priv: .*
+      write_priv: .*
+      state: present
+# rabbitmq cluster set message query
+   - name: rabbitmq set message query
+     shell: |
+      rabbitmqctl set_policy {{ rabbitmq_message_query_policy_name }} "^messages$" \
+      '{"max-length":{{ rabbitmq_message_query }},"overflow":"reject-publish"}' \
+       --apply-to queues

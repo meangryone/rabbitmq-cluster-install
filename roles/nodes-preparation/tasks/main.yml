@@ -1,0 +1,39 @@
+# nodes-preparation
+---
+# rabbitmq server install
+   - name: rabbitmq install prerequisites
+     apt:
+      name: ['curl', 'gnupg']
+      update_cache: yes
+   - name: rabbitmq install signing key
+     apt_key:
+      url: https://github.com/rabbitmq/signing-keys/releases/download/2.0/rabbitmq-release-signing-key.asc
+      state: present
+   - name: rabbitmq install required packages
+     apt:
+      name: "apt-transport-https"
+      update_cache: yes
+   - name: rabbitmq add repositories for latest rabbitmq and erlang 21.x releases
+     shell: |
+      tee /etc/apt/sources.list.d/bintray.rabbitmq.list <<EOF
+      ## Installs the latest Erlang 22.x release.
+      ## Change component to "erlang-21.x" to install the latest 21.x version.
+      ## "bionic" as distribution name should work for any later Ubuntu or Debian release.
+      ## See the release to distribution mapping table in RabbitMQ doc guides to learn more.
+      deb https://dl.bintray.com/rabbitmq-erlang/debian bionic erlang
+      deb https://dl.bintray.com/rabbitmq/debian bionic main
+      EOF
+   - name: rabbitmq server install
+     apt:
+      name: rabbitmq-server
+      update_cache: yes
+# rabbinmq copy config file
+   - name : rabbitmq add config file
+     template:
+      src: rabbitmq.conf.j2
+      dest: /etc/rabbitmq/rabbitmq.conf
+# rabbitmq management plugin install
+   - name: rabbitmq management plugin install
+     rabbitmq_plugin:
+      names: rabbitmq_management
+      state: enabled      

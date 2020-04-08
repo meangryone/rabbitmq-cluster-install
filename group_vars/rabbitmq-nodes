@@ -1,0 +1,18 @@
+---
+ansible_python_interpreter          : "/usr/bin/env python3"  
+
+# set up admin user for management gui
+rabbitmq_management_user            : admin5
+rabbitmq_management_password        : Pa$$w0rd5
+
+# set up tcp port for management gui
+rabbitmq_management_port            : 45672
+
+# set up message query
+# https://www.rabbitmq.com/maxlength.html
+rabbitmq_message_query_policy_name  : test
+rabbitmq_message_query              : 10
+
+
+# set up cluster cookies
+rabbitmq_cluster_cookie             : GTPPCEPLFFLVJSTKRHNA

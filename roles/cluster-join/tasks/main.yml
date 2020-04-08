@@ -1,0 +1,10 @@
+# cluster join
+---
+- name: stop rabbitmq app
+  shell: rabbitmqctl stop_app
+
+- name: add this node to cluster
+  shell: rabbitmqctl join_cluster rabbit@rabbit-node1
+
+- name: start rabbitmq app
+  shell: rabbitmqctl start_app

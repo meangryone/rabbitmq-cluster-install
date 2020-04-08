@@ -1,0 +1,29 @@
+# cluster-preparation
+---
+# hosts synchronization
+   - name: hosts add nodes records
+     blockinfile:
+      path: /etc/hosts
+      block: |
+       192.168.1.47 rabbit-node1
+       192.168.1.48 rabbit-node2
+       192.168.1.49 rabbit-node3
+# cluster cookies synchronization
+   - name: backup old cookies
+     shell: cp -a /var/lib/rabbitmq/.erlang.cookie /var/lib/rabbitmq/.erlang.cookie.old
+   - name: delete old cookie file
+     file:
+      path: /var/lib/rabbitmq/.erlang.cookie
+      state: absent
+   - name : create new file with cookie
+     template:
+      src: erlang.cookie.j2
+      dest: /var/lib/rabbitmq/.erlang.cookie
+      owner: rabbitmq
+      group: rabbitmq
+      mode: 0400
+# rabbitmq server restart
+   - name: rabbitmq server restart
+     service: 
+      name: rabbitmq-server
+      state: restarted 

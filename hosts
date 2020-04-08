@@ -1,0 +1,10 @@
+[rabbitmq-nodes]
+rabbit-node1 ansible_host=192.168.1.47
+rabbit-node2 ansible_host=192.168.1.48
+rabbit-node3 ansible_host=192.168.1.49
+
+[all:vars]
+ansible_connection=ssh
+ansible_user=vagrant
+ansible_ssh_pass=vagrant
+ansible_sudo_pass=vagrant

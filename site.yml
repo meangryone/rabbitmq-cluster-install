@@ -1,0 +1,25 @@
+---
+# all hosts
+ - hosts: all
+   roles:
+    - role: common
+      become: yes
+# nodes
+ - hosts: rabbit-node1, rabbit-node2, rabbit-node3
+   roles:
+   -  role: nodes-preparation
+      become: yes 
+ - hosts: rabbit-node1, rabbit-node2, rabbit-node3
+   roles:
+   -  role: cluster-preparation
+      become: yes 
+# nodes cluster join
+ - hosts: rabbit-node2, rabbit-node3
+   roles:
+   -  role: cluster-join
+      become: yes 
+# nodes cluster configuration
+ - hosts: rabbit-node1
+   roles:
+   -  role: cluster-configuration
+      become: yes
