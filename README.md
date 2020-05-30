@@ -17,5 +17,3 @@ rabbitmq_message_query              : 10
 
 # set up cluster cookies
 rabbitmq_cluster_cookie             : cookie 
-
-#test
